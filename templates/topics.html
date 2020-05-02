@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>List of all Topics</title>
+    <link rel="stylesheet" type="text/css"
+          href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+<!-- Side navigation -->
+<div class="sidenav">
+  <a href="/speeches">Ted Talks</a>
+  <a href="/topics">Topics</a>
+  <a href="speakers">Speakers</a>
+</div>
+
+<div class="main">
+    <h1>List of all Topics for Ted Talks</h1>
+    <p>Click on the topic to see its Ted Talks collection</p>
+    <ul>
+        {% for topic in topics %}
+        <li><p>ID {{topic['topic_id']}}:
+            <a href="/topics/{{topic['topic_id']}}">{{topic['topic']}}</a>
+            <p>
+        {% endfor %}
+    </ul>
+</div>
+</body>
+</html>

@@ -1,20 +1,6 @@
 """
-The tests in this file are written to be used with pytest. A subset of the
-DogDatabase methods are tested.
-
-To set up PyCharm to run these tests, first make sure that the project
-interpreter is a virtual environment that has pytest installed. Then search
-for "python integrated tools" in the preferences and set "Default test runner"
-to be pytest. You should then be able to run the individual tests in this
-file, and run the whole file using pytest.
-
-If you have not watched the video where I walk through the creation of this
-file, I encourage you to do so. Then try copying this file over to the project
-for the last assignment and try writing and running tests for the methods that
-you wrote for the last assignment.
-
-See the pytest web site for more information on using pytest in general:
-https://docs.pytest.org/
+The tests in this file are written to be used with pytest.
+A subset of the TedTalkDatabase methods are tested.
 """
 
 
@@ -64,7 +50,8 @@ def test_insert_speech(tmp_path):
 
 def test_get_speech_by_id(tmp_path):
     """
-    Test that get_speech_by_id() returns None when it should, and properly returns
+    Test that get_speech_by_id() returns None when it should,
+    and properly returns
     a speech when there are 1 or 2 speeches in the database.
     """
 
@@ -72,16 +59,18 @@ def test_get_speech_by_id(tmp_path):
 
     assert db.get_speech_by_id(1) is None
 
-    speech_inserted = db.insert_speech('The laws that sex workers really want',
-                                       1070, 1811102, '2016-05-19', 'activism', 'Juno Mac')
+    speech_inserted = \
+        db.insert_speech('The laws that sex workers really want', 1070, 1811102,
+                         '2016-05-19', 'activism', 'Juno Mac')
     speech = db.get_speech_by_id(1)
 
     assert speech_inserted == speech
 
     assert db.get_speech_by_id(2) is None
 
-    speech_inserted = db.insert_speech('Science in service to the public good', 873,
-                                       872015, '2017-04-25', 'activism', 'Siddhartha Roy')
+    speech_inserted = \
+        db.insert_speech('Science in service to the public good', 873,
+                         872015, '2017-04-25', 'activism', 'Siddhartha Roy')
 
     speech = db.get_speech_by_id(2)
 
@@ -91,16 +80,17 @@ def test_get_speech_by_id(tmp_path):
 def test_get_all_speeches(tmp_path):
     """
     Test that get_all_speeches() properly returns an empty list when no speeches
-    have been inserted, and returns a correct list of speeches when there are one
-    or two dogs in the database.
+    have been inserted, and returns a correct list of speeches when
+    there are one or two speeches in the database.
     """
 
     db = TedTalkDatabase(build_db_path(tmp_path))
 
     assert db.get_all_speeches() == []
 
-    speech_inserted = db.insert_speech('The laws that sex workers really want',
-                                       1070, 1811102, '2016-05-19', 'activism', 'Juno Mac')
+    speech_inserted = \
+        db.insert_speech('The laws that sex workers really want',
+                         1070, 1811102, '2016-05-19', 'activism', 'Juno Mac')
 
     speeches_inserted = [speech_inserted]
 
@@ -109,8 +99,9 @@ def test_get_all_speeches(tmp_path):
     assert len(speeches) == 1
     assert speeches[0] == speech_inserted
 
-    speeches_inserted.append(db.insert_speech('Science in service to the public good', 873,
-                                              872015, '2017-04-25', 'activism', 'Siddhartha Roy'))
+    speeches_inserted.append(
+        db.insert_speech('Science in service to the public good', 873,
+                         872015, '2017-04-25', 'activism', 'Siddhartha Roy'))
 
     speeches = db.get_all_speeches()
 
@@ -130,8 +121,8 @@ def test_insert_review(tmp_path):
 
     assert db.insert_review("It's boring", 1) == 1
 
-    speech = db.insert_speech('The laws that sex workers really want', 1070,
-                              1811102, '2016-05-19', 'activism', 'Juno Mac')
+    db.insert_speech('The laws that sex workers really want', 1070,
+                     1811102, '2016-05-19', 'activism', 'Juno Mac')
 
     review = db.insert_review("It's inspiring", 1)
 
@@ -141,22 +132,24 @@ def test_insert_review(tmp_path):
 
 def test_get_reviews_by_speech(tmp_path):
     """
-    Test that get_reviews_by_speech() properly returns an empty list when no reviews
-    have been inserted for the given speech_id,
-    and returns a correct list of reviews for the given speech_id when there are at least one
-    reviews for the speech exist in the database.
+    Test that get_reviews_by_speech() properly returns an empty list when
+    no reviews have been inserted for the given speech_id,
+    and returns a correct list of reviews for the given speech_id when
+    there are at least one reviews for the speech exist in the database.
     """
 
     db = TedTalkDatabase(build_db_path(tmp_path))
 
-    speech_inserted = db.insert_speech('The laws that sex workers really want',
-                                       1070, 1811102, '2016-05-19', 'activism', 'Juno Mac')
+    db.insert_speech('The laws that sex workers really want',
+                     1070, 1811102, '2016-05-19', 'activism', 'Juno Mac')
 
     assert db.get_reviews_by_speech(1) == []
 
     review_inserted = db.insert_review("It's inspiring!", 1)
     reviews_inserted = [review_inserted]
-    reviews_inserted.append(db.insert_review("The speaker has greatly appealed to my sense of reason.", 1))
+    reviews_inserted.append(
+        db.insert_review("The speaker has greatly "
+                         "appealed to my sense of reason.", 1))
 
     reviews = db.get_reviews_by_speech(1)
 
@@ -174,11 +167,12 @@ def test_delete_speaker(tmp_path):
     """
     db = TedTalkDatabase(build_db_path(tmp_path))
 
-    speech_inserted = db.insert_speech('The laws that sex workers really want',
-                                       1070, 1811102, '2016-05-19', 'activism', 'Juno Mac')
+    db.insert_speech('The laws that sex workers really want',
+                     1070, 1811102, '2016-05-19', 'activism', 'Juno Mac')
 
-    review1 = db.insert_review("It's inspiring!", 1)
-    review2 = db.insert_review("The speaker has greatly appealed to my sense of reason.", 1)
+    db.insert_review("It's inspiring!", 1)
+    db.insert_review("The speaker has greatly "
+                     "appealed to my sense of reason.", 1)
 
     db.delete_speaker(1)
 

@@ -1,12 +1,14 @@
 """
 This module contains the class TedTalkDatabase, which provides an interface to
 an SQLite database containing information about Ted Talks. It is designed to be
-used for the HTML web pages in tedtalks_html.py and REST API implementation in tedtalks_api.py.
+used for the HTML web pages in tedtalks_html.py and
+REST API implementation in tedtalks_api.py.
 """
 
 
 import os
 import sqlite3
+import csv
 
 
 def row_to_dict_or_none(cur):
@@ -69,7 +71,8 @@ class TedTalkDatabase:
                     '    views INTEGER, date DATE, '
                     '    topic_id INTEGER, speaker_id INTEGER, '
                     '    FOREIGN KEY (topic_id) REFERENCES topic(topic_id), '
-                    '    FOREIGN KEY (speaker_id) REFERENCES speaker(speaker_id))')
+                    '    FOREIGN KEY (speaker_id) '
+                    '       REFERENCES speaker(speaker_id))')
         cur.execute('CREATE TABLE review(review_id INTEGER PRIMARY KEY, '
                     '    content TEXT, speech_id INTEGER, '
                     '    FOREIGN KEY (speech_id) REFERENCES speech(speech_id))')
@@ -114,7 +117,8 @@ class TedTalkDatabase:
         """
         cur = self.conn.cursor()
 
-        query = ('SELECT review.review_id as review_id, review.content as content, '
+        query = ('SELECT review.review_id as review_id, '
+                 'review.content as content, '
                  'speech.speech_id as speech_id, '
                  'speech.title as speech_title '
                  'FROM speech, review '
@@ -134,7 +138,8 @@ class TedTalkDatabase:
 
         cur = self.conn.cursor()
 
-        query = ('SELECT review.review_id as review_id, review.content as content, '
+        query = ('SELECT review.review_id as review_id, '
+                 'review.content as content, '
                  'speech.speech_id as speech_id, '
                  'speech.title as speech_title '
                  'FROM speech, review '
@@ -150,14 +155,16 @@ class TedTalkDatabase:
 
     def get_reviews_by_speech(self, speech_id):
         """
-        Given a speech's primary key, return a list of all reviews for that speech.
+        Given a speech's primary key, return a list of
+        all reviews for that speech.
 
         :param speech_id: the primary key of the speech
         :return: a list dict representing the reviews for the given speech
         """
         cur = self.conn.cursor()
 
-        query = ('SELECT review.review_id as review_id, review.content as content, '
+        query = ('SELECT review.review_id as review_id, '
+                 'review.content as content, '
                  'speech.title as speech_title, '
                  'speech.speech_id as speech_id '
                  'FROM review, speech '
@@ -171,10 +178,24 @@ class TedTalkDatabase:
 
         return reviews
 
+    def delete_review(self, review_id):
+        """
+        Delete the review with the given primary key.
+
+        :param review_id: primary key of the review
+        """
+
+        cur = self.conn.cursor()
+
+        query = 'DELETE FROM review WHERE review_id = ?'
+        cur.execute(query, (review_id,))
+
+        self.conn.commit()
+
     def insert_speech(self, title, duration, views, date, topic, speaker):
         """
-        Inserts a speech into the database. If the speech's topic/speaker is not already in
-        the database, inserts topic/speaker too.
+        Inserts a speech into the database. If the speech's topic/speaker
+        is not already in the database, inserts topic/speaker too.
 
         Returns a dictionary representation of the speech.
 
@@ -258,7 +279,8 @@ class TedTalkDatabase:
 
     def get_speeches_by_speaker(self, speaker_id):
         """
-        Given a speaker's primary key, return a list of all speeches by that speaker.
+        Given a speaker's primary key, return a list of
+        all speeches by that speaker.
 
         :param speaker_id: the primary key of the speaker
         :return: a list dict representing the speeches by that speaker
@@ -285,7 +307,8 @@ class TedTalkDatabase:
 
     def get_speeches_by_topic(self, topic_id):
         """
-        Given a topic's primary key, return a list of all speeches with that topic.
+        Given a topic's primary key, return a list of
+        all speeches with that topic.
 
         :param topic_id: the primary key of the topic
         :return: a list dict representing the speeches with the given topic
@@ -495,3 +518,13 @@ class TedTalkDatabase:
         cur.execute(query2, (speaker_id,))
 
         self.conn.commit()
+
+
+if __name__ == '__main__':
+
+    db = TedTalkDatabase('tedtalks.sqlite')
+    with open('sample.csv', encoding='utf-8') as f:
+        reader = csv.DictReader(f)
+        for row in reader:
+            db.insert_speech(row['title'], row['duration'], row['views'],
+                             row['date'], row['topic'], row['speaker'])
