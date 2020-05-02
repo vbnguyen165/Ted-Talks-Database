@@ -3,7 +3,7 @@ A Flask Application that presents all speeches, reviews, relevant topics, and sp
 
 ## The Database:
 Running **tedtalk_db.py** will create a database whose relationships among different entities are demonstated below.
-![](tedtalk_db.jpg)
+![](tedtalk_diagram.jpg)
 
 ## HTML Webpages
 **tedtalk_html.py** presents information from the database as a web page using an HTML template. There is also an option to add reviews for each Ted Talks.
