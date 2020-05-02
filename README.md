@@ -10,4 +10,4 @@ Running **tedtalk_db.py** will create a database whose relationships among diffe
 
 ## REST API
 - **tedtalk_api.py** provide an API for accessing and modifying the data in Ted Talk Database. 
-- The file **command-line_utility.py" uses Python’s requests module to use the API to present information and add speeches from a given csv file. 
+- The file **command-line_utility.py** uses Python’s requests module to use the API to present information and add speeches from a given csv file. 
