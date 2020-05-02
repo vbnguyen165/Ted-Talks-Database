@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Add Review for "{{speech['title']}}</title>
+    <link rel="stylesheet" type="text/css"
+          href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+<!-- Side navigation -->
+<div class="sidenav">
+  <a href="/speeches">Ted Talks</a>
+  <a href="/topics">Topics</a>
+  <a href="speakers">Speakers</a>
+</div>
+
+<div class = "main"
+    <h1>Add Review for "{{speech['title']}}"</h1>
+
+    {% if display_notice %}
+        <p>
+        {% if successful_add %}
+            <span style="background-color: lightgreen;">
+        {% else %}
+            <span style="background-color: lightcoral;">
+        {% endif %}
+        {{ notice_text }}
+        </span>
+        </p>
+    {% endif %}
+
+    <p>
+    <a href="/speeches/{{speech['speech_id']}}">
+        Go back to "{{speech['title']}}"
+    </a>
+    </p>
+
+    <form action="/speeches/{{speech['speech_id']}}/add_review" method="post">
+        <label for="review_content">Review Content:</label>
+        <br>
+        <input type="text" id="review_content" name="review_content">
+        <br>
+        <input type="submit" value="Submit">
+    </form>
+</div>
+</body>
+</html>

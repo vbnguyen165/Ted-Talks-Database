@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>List of all Speakers</title>
+    <link rel="stylesheet" type="text/css"
+          href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+<!-- Side navigation -->
+<div class="sidenav">
+  <a href="/speeches">Ted Talks</a>
+  <a href="/topics">Topics</a>
+  <a href="/speakers">Speakers</a>
+</div>
+
+<div class="main">
+    <h1>List of all Speakers</h1>
+    <p>Click on the name of the speaker to see their Ted Talks collection</p>
+    <ul>
+        {% for speaker in speakers %}
+        <li><p>ID {{speaker['speaker_id']}}:
+            <a href="/speakers/{{speaker['speaker_id']}}">
+                {{speaker['speaker']}}
+            </a>
+        </p></li>
+        {% endfor %}
+    </ul>
+</div>
+</body>
+</html>
