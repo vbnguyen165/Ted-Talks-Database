@@ -1,7 +1,7 @@
 # Ted Talks Flask Application
 A Flask Application that presents all speeches, reviews, relevant topics, and speakers from TED Talks in HTML webpages and REST API.
 
-##The Database:
+## The Database:
 Running **tedtalk_db.py** will create a database whose relationships among different entities are demonstated below.
 ![](tedtalk_db.jpg)
 
