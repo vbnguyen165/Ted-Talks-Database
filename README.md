@@ -6,7 +6,7 @@ Running **tedtalk_db.py** will create a database whose relationships among diffe
 ![](tedtalk_diagram.jpg)
 
 ## HTML Webpages
-**tedtalk_html.py** presents information from the database as a web page using an HTML template. There is also an option to add reviews for each Ted Talks.
+**tedtalk_html.py** presents information from the database as a web page using an HTML template. There is also an option to add reviews for each Ted Talk.
 
 ## REST API
 - **tedtalk_api.py** provide an API for accessing and modifying the data in Ted Talk Database. 
