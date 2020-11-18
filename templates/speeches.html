@@ -1,0 +1,36 @@
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>List of all Ted Talks</title>
+    <link rel="stylesheet" type="text/css"
+          href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+<!-- Side navigation -->
+<div class="sidenav">
+  <a href="/speeches">Ted Talks</a>
+  <a href="/topics">Topics</a>
+  <a href="speakers">Speakers</a>
+</div>
+
+<div class="main">
+    <h1>List of all TED Talks</h1>
+    <p>Click on the title of the speẹch to see
+        its reviews and add your own reviews.</p>
+    <ul>
+        {% for speech in speeches %}
+        <li><p>ID {{speech['speech_id']}}:
+            <a href="/speeches/{{speech['speech_id']}}">{{speech['title']}}</a>
+        </p></li>
+                <ul>
+                    <li>Duration: {{speech['duration']}} seconds</li>
+                    <li>Number of Views: {{speech['views']}}</li>
+                    <li>Relevant topic: {{speech['topic']}}</li>
+                    <li>Delivered by: {{speech['speaker']}}</li>
+                </ul>
+        {% endfor %}
+    </ul>
+</div>
+</body>
+</html>

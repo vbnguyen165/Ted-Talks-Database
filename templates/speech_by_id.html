@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{speech['title']}}</title>
+    <link rel="stylesheet" type="text/css"
+          href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+<!-- Side navigation -->
+<div class="sidenav">
+  <a href="/speeches">Ted Talks</a>
+  <a href="/topics">Topics</a>
+  <a href="/speakers">Speakers</a>
+</div>
+
+<div class="main">
+    <h1>ID {{speech['speech_id']}}: {{speech['title']}}</h1>
+    <ul>
+        <li>Duration: {{speech['duration']}} seconds</li>
+        <li>Number of Views: {{speech['views']}}</li>
+        <li>Relevant topic: {{speech['topic']}}</li>
+        <li>Delivered by: {{speech['speaker']}}</li>
+    </ul>
+    <hr>
+    <p>Reviews:</p>
+    {% for review in speech['reviews'] %}
+    <ul>
+        <li>{{review['content']}}</li>
+    </ul>
+    {% endfor %}
+
+    <p><a href="/speeches/{{speech['speech_id']}}/add_review">
+        Add you review for this speech</a></p>
+</div>
+</body>
+</html>
