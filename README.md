@@ -1,5 +1,6 @@
 # Ted Talks Flask Application
 A Flask Application that presents all speeches, reviews, relevant topics, and speakers from TED Talks in HTML webpages and REST API.
+
 If you are interested in my analysis of data gathered from TED Talks videos, please refer to <a href="https://github.com/vbnguyen165/ted_analysis">this repository</a>.
 
 ## The Database:
